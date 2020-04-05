@@ -8,7 +8,7 @@ var entities = new Entities();
 var BattleshipGame = require('./app/game.js');
 var GameStatus = require('./app/gameStatus.js');
 
-var port = 3000;
+var port = 3001;
 
 var users = {};
 var gameIdCounter = 1;
