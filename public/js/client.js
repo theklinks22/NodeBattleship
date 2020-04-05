@@ -7,7 +7,8 @@ $(function() {
   socket.on('connect', function() {
     console.log('Connected to server.');
     $('#disconnected').hide();
-    $('#waiting-room').show();   
+    // $('#waiting-room').show();
+    $('#login').show()   
   });
 
   /**
@@ -17,6 +18,7 @@ $(function() {
     console.log('Disconnected from server.');
     $('#waiting-room').hide();
     $('#game').hide();
+    $('#login').hide();
     $('#disconnected').show();
   });
 
@@ -28,6 +30,7 @@ $(function() {
     $('#messages').empty();
     $('#disconnected').hide();
     $('#waiting-room').hide();
+    $('#login').hide();
     $('#game').show();
     $('#game-number').html(gameId);
   })
@@ -80,6 +83,18 @@ $(function() {
     return false;
   });
 
+  /* 
+  * Send username to server
+  */
+  $('#login-form').submit(function() {
+    const uname = $('#uname').val();
+    socket.emit('login', uname);
+    $('#uname').val('');
+    $('#user').text(uname);
+    $('#login').hide();
+    $('#waiting-room').show();
+    return false;
+  });
 });
 
 /**

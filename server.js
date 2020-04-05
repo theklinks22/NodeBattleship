@@ -8,7 +8,7 @@ var entities = new Entities();
 var BattleshipGame = require('./app/game.js');
 var GameStatus = require('./app/gameStatus.js');
 
-var port = 8900;
+var port = 3000;
 
 var users = {};
 var gameIdCounter = 1;
@@ -24,12 +24,10 @@ io.on('connection', function(socket) {
 
   // create user object for additional data
   users[socket.id] = {
+    uname: null,
     inGame: null,
     player: null
   }; 
-
-  // join waiting room until there are enough players to start a new game
-  socket.join('waiting room');
 
   /**
    * Handle chat messages
@@ -40,7 +38,7 @@ io.on('connection', function(socket) {
       
       // Send message to opponent
       socket.broadcast.to('game' + users[socket.id].inGame.id).emit('chat', {
-        name: 'Opponent',
+        name: users[socket.id].uname,
         message: entities.encode(msg),
       });
 
@@ -50,6 +48,19 @@ io.on('connection', function(socket) {
         message: entities.encode(msg),
       });
     }
+  });
+  
+  /**
+   * Handle login from client
+   */
+  socket.on('login', function(uname) {
+    console.log(uname + ' has logged in!');
+    users[socket.id].uname = uname;
+    console.log(socket.id);
+    console.log(users[socket.id]);
+    // join waiting room until there are enough players to start a new game
+    socket.join('waiting room');
+    joinWaitingPlayers();
   });
 
   /**
@@ -101,11 +112,18 @@ io.on('connection', function(socket) {
   joinWaitingPlayers();
 });
 
+function checkLoggedIn(players) {
+  players.forEach(player => {
+    // console.log(player);
+  });
+}
+
 /**
  * Create games for players in waiting room
  */
 function joinWaitingPlayers() {
   var players = getClientsInRoom('waiting room');
+  // checkLoggedIn(players);
   
   if(players.length >= 2) {
     // 2 player waiting. Create new game!

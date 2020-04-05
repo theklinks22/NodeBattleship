@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div>
-
+            
             <!-- Waiting room -->
             <div id="waiting-room" style="display:none;">
                 <div class="row">
@@ -30,8 +30,32 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">Waiting Room</div>
                             <div class="panel-body">
-                                <p>You are connected to the server.</p>
+                                <p><span id="user"></span>, you are connected to the server.</p>
                                 <p>Waiting for another player...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Login Screen -->
+            <div id="login" style="display:none;">
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-4 text-center">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">Welcome to Battleship!</div>
+                            <div class="panel-body">
+                                <p>Please enter a name to continue</p>
+                            </div>
+                            <div class="panel-body">
+                                <form id="login-form" action="">
+                                    <input id="uname" type="text" name="username" />
+                                    <label for="first-game">Play first available game</label>
+                                    <input id="first-avail" type="checkbox" name="first-game" checked/>
+                                    <div class="row">
+                                        <input type="submit" style="margin: 5px 0;" value="Play"/>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -49,12 +73,12 @@
                                 <!-- Player grids -->
                                 <div class="row">
                                     <div class="col-md-6 player-grid text-center">
-                                        <h3>You</h3>
-                                        <canvas id="canvas-grid1" width="361" height="361">Browser does not support canvas.</canvas>
+                                        <h3 id="opponent-player">Opponent</h3>
+                                        <canvas id="canvas-grid2" width="361" height="361">Browser does not support canvas.</canvas>
                                     </div>
                                     <div class="col-md-6 player-grid text-center">
-                                        <h3>Opponent</h3>
-                                        <canvas id="canvas-grid2" width="361" height="361">Browser does not support canvas.</canvas>
+                                        <h3 id="">You</h3>
+                                        <canvas id="canvas-grid1" width="361" height="361">Browser does not support canvas.</canvas>
                                     </div>
                                 </div>
                                 
@@ -64,9 +88,10 @@
                             <ul class="list-group">
                                 <!-- Status -->
                                 <li class="list-group-item text-center" id="turn-status"></li>
-
+                                
                                 <!-- Chat messages -->
                                 <li class="list-group-item" id="messages-list">
+                                    <ul style="text-align: center;font-weight: bold;">Talk Trash</ul>
                                     <ul id="messages"></ul>
                                 </li>
 
