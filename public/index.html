@@ -1,126 +1,190 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>NodeBattleship</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/site.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-<div class="container">
-    <div class="row vertical-center-row">
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/css/site.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row vertical-center-row">
         <div class="col-md-12">
-
-            <!-- Disconnected from server -->
-            <div id="disconnected">
-                <div class="row">
-                    <div class="col-sm-4 col-sm-offset-4 text-center">
-                        <div class="alert alert-danger">
-                            <p>Not connected to server.</p>
-                        </div>
-                    </div>
+          <!-- Disconnected from server -->
+          <div id="disconnected">
+            <div class="row">
+              <div class="col-sm-4 col-sm-offset-4 text-center">
+                <div class="alert alert-danger">
+                  <p>Not connected to server.</p>
                 </div>
+              </div>
             </div>
-            
-            <!-- Waiting room -->
-            <div id="waiting-room" style="display:none;">
-                <div class="row">
-                    <div class="col-sm-4 col-sm-offset-4 text-center">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">Waiting Room</div>
-                            <div class="panel-body">
-                                <p><span id="user"></span>, you are connected to the server.</p>
-                                <p>Waiting for another player...</p>
-                            </div>
-                        </div>
-                    </div>
+          </div>
+
+          <!-- Waiting room -->
+          <div id="waiting-room" style="display: none;">
+            <div class="row">
+              <div class="col-sm-4 col-sm-offset-4 text-center">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">Waiting Room</div>
+                  <div class="panel-body">
+                    <p>
+                      <span id="user"></span>, you are connected to the server.
+                    </p>
+                    <p>Waiting for another player...</p>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
 
-            <!-- Login Screen -->
-            <div id="login" style="display:none;">
-                <div class="row">
-                    <div class="col-sm-4 col-sm-offset-4 text-center">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">Welcome to Battleship!</div>
-                            <div class="panel-body">
-                                <p>Please enter a name to continue</p>
-                            </div>
-                            <div class="panel-body">
-                                <form id="login-form" action="">
-                                    <input id="uname" type="text" name="username" />
-                                    <label for="first-game">Play first available game</label>
-                                    <input id="first-avail" type="checkbox" name="first-game" checked/>
-                                    <div class="row">
-                                        <input type="submit" style="margin: 5px 0;" value="Play"/>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+          <!-- Login Screen -->
+          <div id="login" style="display: none;">
+            <div class="row">
+              <div class="col-sm-4 col-sm-offset-4 text-center">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">Welcome to Battleship!</div>
+                  <div class="panel-body">
+                    <p>Please enter a name to continue</p>
+                  </div>
+                  <div class="panel-body">
+                    <form id="login-form" action="">
+                      <input id="uname" type="text" name="username" />
+                      <label for="first-game">Play first available game</label>
+                      <input
+                        id="first-avail"
+                        type="checkbox"
+                        name="first-game"
+                        checked
+                      />
+                      <div class="row">
+                        <input
+                          type="submit"
+                          style="margin: 5px 0;"
+                          value="Play"
+                        />
+                      </div>
+                    </form>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
 
-            <!-- Game -->
-            <div id="game" style="display:none;">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">Battleship Game #<span id="game-number"></span></div>
-                            <div class="panel-body">
-
-                                <!-- Player grids -->
-                                <div class="row">
-                                    <div class="col-md-6 player-grid text-center">
-                                        <h3 id="opponent-player">Opponent</h3>
-                                        <canvas id="canvas-grid2" width="361" height="361">Browser does not support canvas.</canvas>
-                                    </div>
-                                    <div class="col-md-6 player-grid text-center">
-                                        <h3 id="">You</h3>
-                                        <canvas id="canvas-grid1" width="361" height="361">Browser does not support canvas.</canvas>
-                                    </div>
-                                </div>
-                                
-                                
-                            </div>
-
-                            <ul class="list-group">
-                                <!-- Status -->
-                                <li class="list-group-item text-center" id="turn-status"></li>
-                                
-                                <!-- Chat messages -->
-                                <li class="list-group-item" id="messages-list">
-                                    <ul style="text-align: center;font-weight: bold;">Talk Trash</ul>
-                                    <ul id="messages"></ul>
-                                </li>
-
-                                <!-- Send chat message form -->
-                                <li class="list-group-item">
-                                    <form id="message-form" action="">
-                                        <div class="input-group">
-                                        <input id="message" class="form-control" autocomplete="off" />
-                                        <div class="input-group-btn">
-                                            <button class="btn btn-primary">Send Message</button>
-                                        </div>
-                                        </div>
-                                    </form>
-                                </li>
-                            </ul>
-
-                        </div>
+          <!-- Game -->
+          <div id="game" style="display: none;">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    Battleship Game #<span id="game-number"></span>
+                  </div>
+                  <div class="panel-body">
+                    <!-- Player grids -->
+                    <div class="row">
+                      <div class="col-md-6 player-grid text-center">
+                        <h3 id="opponent-player">Opponent</h3>
+                        <canvas id="canvas-grid2" width="361" height="361"
+                          >Browser does not support canvas.</canvas
+                        >
+                      </div>
+                      <div class="col-md-6 player-grid text-center">
+                        <h3 id="">You</h3>
+                        <canvas id="canvas-grid1" width="361" height="361"
+                          >Browser does not support canvas.</canvas
+                        >
+                      </div>
                     </div>
-                </div>
-            </div>
+                  </div>
 
+                  <ul class="list-group">
+                    <!-- Status -->
+                    <li
+                      class="list-group-item text-center"
+                      id="turn-status"
+                    ></li>
+
+                    <!-- Chat messages -->
+                    <li class="list-group-item" id="messages-list">
+                      <ul style="text-align: center; font-weight: bold;">
+                        Talk Trash
+                      </ul>
+                      <ul id="messages"></ul>
+                    </li>
+
+                    <!-- Send chat message form -->
+                    <li class="list-group-item">
+                      <form id="message-form" action="">
+                        <div class="input-group">
+                          <input
+                            id="message"
+                            class="form-control"
+                            autocomplete="off"
+                          />
+                          <div class="input-group-btn">
+                            <button class="btn btn-primary">
+                              Send Message
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
-<script type="text/javascript" src="/js/game.js"></script>
-<script type="text/javascript" src="/js/client.js"></script>
-</body>
+    <script
+      async=""
+      src="https://www.google-analytics.com/analytics.js"
+    ></script>
+    <script>
+      if (true) {
+        ;(function (i, s, o, g, r, a, m) {
+          i['GoogleAnalyticsObject'] = r
+          ;(i[r] =
+            i[r] ||
+            function () {
+              ;(i[r].q = i[r].q || []).push(arguments)
+            }),
+            (i[r].l = 1 * new Date())
+          ;(a = s.createElement(o)), (m = s.getElementsByTagName(o)[0])
+          a.async = 1
+          a.src = g
+          m.parentNode.insertBefore(a, m)
+        })(
+          window,
+          document,
+          'script',
+          'https://www.google-analytics.com/analytics.js',
+          'ga'
+        )
+      }
+      if (typeof ga === 'function') {
+        ga('create', 'UA-136177400-1', 'auto', {})
+      }
+    </script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"
+    ></script>
+    <script type="text/javascript" src="/js/game.js"></script>
+    <script type="text/javascript" src="/js/client.js"></script>
+  </body>
 </html>
