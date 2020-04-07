@@ -50,7 +50,20 @@ io.on('connection', function(socket) {
       });
     }
   });
-  
+
+  /* 
+  * Update opponent name
+  */
+  socket.on('opp-name', function(){
+    // Set opponent's grid to uname
+    if(users[socket.id].inGame !== null){
+      socket.broadcast.to('game' + users[socket.id].inGame.id).emit('opponentn', {
+        name: users[socket.id].uname
+      });
+    }  
+  });
+
+
   /**
    * Handle login from client
    */

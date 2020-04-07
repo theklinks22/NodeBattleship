@@ -121,6 +121,8 @@ var Game = (function() {
       } else {
         $('#turn-status').removeClass('alert-your-turn').addClass('alert-opponent-turn').html('Waiting for opponent.');
       }
+      drawGrid(0);
+      drawGrid(1);
     }
   };
 
@@ -166,7 +168,12 @@ var Game = (function() {
         squareX = j * (squareWidth + gridBorder) + gridBorder;
         squareY = i * (squareHeight + gridBorder) + gridBorder;
 
-        context[gridIndex].fillStyle = '#7799FF'
+        if(turn){
+          context[gridIndex].fillStyle = '#7799FF';
+        } else {
+          context[gridIndex].fillStyle = '#b3c6fc';
+        }
+        
 
         // Highlight square if it's user's turn and user hovers over an unfired on, opponent square.
         if(j === squareHover.x && i === squareHover.y &&

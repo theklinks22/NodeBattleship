@@ -75,7 +75,7 @@ h3 {
 
 #turn-status {
     padding: 10px 0px;
-    margin: 25px 0 0 0;
+    /* margin: 25px 0 0 0; */
 }
 
 #turn-status a {
@@ -105,4 +105,9 @@ h3 {
     color: #a94442;
     background-color: #f2dede;
     border-color: #ebccd1;
+}
+
+.game-instruction {
+    text-align: left;
+    margin: 0;
 }

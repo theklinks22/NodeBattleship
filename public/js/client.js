@@ -33,6 +33,7 @@ $(function() {
     $('#login').hide();
     $('#game').show();
     $('#game-number').html(gameId);
+    socket.emit('opp-name');
   })
 
   /**
@@ -42,6 +43,14 @@ $(function() {
     Game.setTurn(gameState.turn);
     Game.updateGrid(gameState.gridIndex, gameState.grid);
   });
+
+  /* 
+  * Set the opponent's username above grid
+  */
+ socket.on('opponentn', function(oppname) {
+   console.log("Here: " + oppname.name);
+   $('#opponent-player').html(oppname.name);
+ });
 
   /**
    * Game chat message
@@ -88,6 +97,10 @@ $(function() {
   */
   $('#login-form').submit(function() {
     const uname = $('#uname').val();
+    if(uname == null || uname == ''){
+      alert('Please enter a name!');
+      return false;
+    }
     socket.emit('login', uname);
     $('#uname').val('');
     $('#user').text(uname);

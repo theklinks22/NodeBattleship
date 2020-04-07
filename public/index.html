@@ -60,22 +60,41 @@
           <!-- Login Screen -->
           <div id="login" style="display: none;">
             <div class="row">
-              <div class="col-sm-4 col-sm-offset-4 text-center">
+              <div class="col-sm-6 col-sm-offset-3 text-center">
                 <div class="panel panel-primary">
                   <div class="panel-heading">Welcome to Battleship!</div>
                   <div class="panel-body">
-                    <p>Please enter a name to continue</p>
+                    <p
+                      class="game-instruction"
+                      style="text-decoration: underline;"
+                    >
+                      How to Play:
+                    </p>
+                    <p class="game-instruction">
+                      Click a square on your opponent's grid to take a shot when
+                      it's your turn!
+                    </p>
+                    <!-- <p class="game-instruction">
+                      Choosing first available game will match you with a random person.
+                    </p> -->
                   </div>
                   <div class="panel-body">
+                    <p style="margin: 0;">Please enter a name to play!</p>
+                  </div>
+                  <div class="panel-body" style="padding-top: 5px;">
                     <form id="login-form" action="">
-                      <input id="uname" type="text" name="username" />
-                      <label for="first-game">Play first available game</label>
-                      <input
-                        id="first-avail"
-                        type="checkbox"
-                        name="first-game"
-                        checked
-                      />
+                      <div class="row">
+                        <input id="uname" type="text" name="username" />
+                        <!-- <label for="first-game"
+                          >Play first available game</label
+                        >
+                        <input
+                          id="first-avail"
+                          type="checkbox"
+                          name="first-game"
+                          checked
+                        /> -->
+                      </div>
                       <div class="row">
                         <input
                           type="submit"
@@ -98,11 +117,18 @@
                   <div class="panel-heading">
                     Battleship Game #<span id="game-number"></span>
                   </div>
+                  <ul class="list-group">
+                    <!-- Status -->
+                    <li
+                      class="list-group-item text-center"
+                      id="turn-status"
+                    ></li>
+                  </ul>
                   <div class="panel-body">
                     <!-- Player grids -->
                     <div class="row">
                       <div class="col-md-6 player-grid text-center">
-                        <h3 id="opponent-player">Opponent</h3>
+                        <h3><span id="opponent-player"></span></h3>
                         <canvas id="canvas-grid2" width="361" height="361"
                           >Browser does not support canvas.</canvas
                         >
@@ -117,15 +143,15 @@
                   </div>
 
                   <ul class="list-group">
-                    <!-- Status -->
-                    <li
-                      class="list-group-item text-center"
-                      id="turn-status"
-                    ></li>
-
                     <!-- Chat messages -->
                     <li class="list-group-item" id="messages-list">
-                      <ul style="text-align: center; font-weight: bold;">
+                      <ul
+                        style="
+                          text-align: center;
+                          font-weight: bold;
+                          padding: 0;
+                        "
+                      >
                         Talk Trash
                       </ul>
                       <ul id="messages"></ul>
